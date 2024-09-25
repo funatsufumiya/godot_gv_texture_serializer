@@ -4,15 +4,35 @@ GVTextureSerializer addon for Godot 4.2.2 - 4.3
 
 Can be used for Texture sharing as bytes, with ZeroMQ etc.
 
-## Usage
-
-***WIP***
-
 ## Install
 
-***WIP***
-
 use [godot_gv_texture_serializer_bin](https://github.com/funatsufumiya/godot_gv_texture_serializer_bin). see [instruction](https://github.com/funatsufumiya/godot_gv_texture_serializer_bin/blob/main/README.md)
+
+## Usage
+
+see [project/](project/), or [GDScript of it](project/test.gd)
+
+```gdscript
+var src_image: Image = sub_viewport.get_texture().get_image()
+# print("compresse image")
+# print("width: ", src_image.get_width())
+# print("height: ", src_image.get_height())
+# print("format: ", _image_format_to_string(src_image.get_format()))
+# print("image_bytes: ", src_image.get_data().size())
+
+var bytes:PackedByteArray = serializer.serializeImage(src_image)
+# print("packed bytes: ", bytes.size())
+
+var image: Image = serializer.deserialize(bytes)
+# print("decompressed image")
+# print("width: ", image.get_width())
+# print("height: ", image.get_height())
+# print("format: ", _image_format_to_string(image.get_format()))
+# print("image_bytes: ", image.get_data().size())
+
+texture_rect.texture = ImageTexture.create_from_image(image) # show decompressed image
+```
+
 
 ## Binary File Format (GVTexture)
 
