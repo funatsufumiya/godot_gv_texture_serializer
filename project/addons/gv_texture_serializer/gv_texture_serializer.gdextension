@@ -1,0 +1,17 @@
+[configuration]
+
+entry_symbol = "gdextension_init"
+compatibility_minimum = 4.2
+
+[libraries]
+
+macos.debug = "bin/libgv_texture_serializer.macos.debug.framework"
+macos.release = "bin/libgv_texture_serializer.macos.release.framework"
+windows.debug.x86_64 = "bin/libgv_texture_serializer.windows.debug.x86_64.dll"
+windows.release.x86_64 = "bin/libgv_texture_serializer.windows.release.x86_64.dll"
+linux.debug.x86_64 = "bin/libgv_texture_serializer.linux.debug.x86_64.so"
+linux.release.x86_64 = "bin/libgv_texture_serializer.linux.release.x86_64.so"
+linux.debug.arm64 = "bin/libgv_texture_serializer.linux.debug.arm64.so"
+linux.release.arm64 = "bin/libgv_texture_serializer.linux.release.arm64.so"
+linux.debug.rv64 = "bin/libgv_texture_serializer.linux.debug.rv64.so"
+linux.release.rv64 = "bin/libgv_texture_serializer.linux.release.rv64.so"
