@@ -18,6 +18,7 @@
 /test/*.o
 
 log.txt
+*log.txt
 *.log
 
 project/addons/gv_texture_serializer/bin/*

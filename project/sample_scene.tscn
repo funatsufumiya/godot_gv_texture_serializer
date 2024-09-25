@@ -4,5 +4,13 @@
 
 [node name="SampleScene" type="Node2D"]
 
-[node name="Test" type="Node" parent="."]
+[node name="Test" type="Node" parent="." node_paths=PackedStringArray("texture_rect")]
 script = ExtResource("1_t0n1d")
+texture_rect = NodePath("../CenterContainer/TextureRect")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
