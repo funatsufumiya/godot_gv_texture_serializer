@@ -176,7 +176,7 @@ PackedByteArray GVTextureSerializer::decompressLZ4(const PackedByteArray &p_data
 PackedByteArray GVTextureSerializer::createGVTextureByteArray(LZ4Data lz4Data)
 {
     PackedByteArray gv_texture_bytes = PackedByteArray();
-    gv_texture_bytes.resize(24 + lz4Data.lz4_compressed_bytes.size());
+    gv_texture_bytes.resize(20 + lz4Data.lz4_compressed_bytes.size());
     uint32_t *gv_texture_bytes_ptr = (uint32_t *)gv_texture_bytes.ptrw();
     gv_texture_bytes_ptr[0] = lz4Data.width;
     gv_texture_bytes_ptr[1] = lz4Data.height;
