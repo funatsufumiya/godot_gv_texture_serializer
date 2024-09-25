@@ -1,16 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbyrticosbwf8"]
+[gd_scene load_steps=4 format=3 uid="uid://cbyrticosbwf8"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_t0n1d"]
+[ext_resource type="PackedScene" uid="uid://c3ofujmcefcby" path="res://scene_3d.tscn" id="2_h14pi"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_yflob"]
+viewport_path = NodePath("SubViewport")
 
 [node name="SampleScene" type="Node2D"]
 
-[node name="Test" type="Node" parent="." node_paths=PackedStringArray("texture_rect")]
+[node name="Test" type="Node" parent="." node_paths=PackedStringArray("texture_rect", "sub_viewport")]
 script = ExtResource("1_t0n1d")
-texture_rect = NodePath("../CenterContainer/TextureRect")
+texture_rect = NodePath("../HBoxContainer/Received")
+sub_viewport = NodePath("../SubViewport")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+[node name="Original" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
+texture = SubResource("ViewportTexture_yflob")
+
+[node name="Received" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="Scene3d" parent="SubViewport" instance=ExtResource("2_h14pi")]

@@ -1,9 +1,10 @@
 extends Node
 
 @export var texture_rect: TextureRect;
+@export var sub_viewport: SubViewport;
 
 @onready var serializer: GVTextureSerializer = GVTextureSerializer.new()
-@onready var image_texture: CompressedTexture2D = load("res://icon.svg")
+# @onready var image_texture: CompressedTexture2D = load("res://icon.svg")
 
 func _image_format_to_string(format: int) -> String:
 	match format:
@@ -91,28 +92,32 @@ func _image_format_to_string(format: int) -> String:
 			return "UNKNOWN"
 
 func _ready() -> void:
-	var src_image: Image = image_texture.get_image()
-	print("compresse image")
-	print("width: ", src_image.get_width())
-	print("height: ", src_image.get_height())
-	print("format: ", src_image.get_format())
+	pass
+
+func _compress_decompress_image() -> void:
+	# var src_image: Image = image_texture.get_image()
+	var src_image: Image = sub_viewport.get_texture().get_image()
+	# print("compresse image")
+	# print("width: ", src_image.get_width())
+	# print("height: ", src_image.get_height())
+	# print("format: ", _image_format_to_string(src_image.get_format()))
+	# print("image_bytes: ", src_image.get_data().size())
 
 	# pass	
-	var bytes:PackedByteArray = serializer.serializeCompressedTexture2D(image_texture)
-	print("packed bytes: ", bytes.size())
+	# var bytes:PackedByteArray = serializer.serializeCompressedTexture2D(image_texture)
+	var bytes:PackedByteArray = serializer.serializeImage(src_image)
+	# print("packed bytes: ", bytes.size())
 
 	var image: Image = serializer.deserialize(bytes)
-	print("decompressed image")
-	print("width: ", image.get_width())
-	print("height: ", image.get_height())
-	print("format: ", image.get_format())
+	# print("decompressed image")
+	# print("width: ", image.get_width())
+	# print("height: ", image.get_height())
+	# print("format: ", _image_format_to_string(image.get_format()))
+	# print("image_bytes: ", image.get_data().size())
 
 	if texture_rect:
 		texture_rect.texture = ImageTexture.create_from_image(image)
 
-	# image.get_format()
-	# image.get_data()
-
-
 func _process(_delta: float) -> void:
-	pass
+	# pass
+	_compress_decompress_image()

@@ -39,7 +39,7 @@ void GVTextureSerializer::_bind_methods() {
 
 GVTextureSerializer::GVTextureSerializer()
 {
-    UtilityFunctions::print("GVTextureSerializer::constructor");
+    // UtilityFunctions::print("GVTextureSerializer::constructor");
 }
 
 GVTextureSerializer::~GVTextureSerializer()
@@ -208,6 +208,13 @@ PackedByteArray GVTextureSerializer::serializeImage(const Ref<Image> &p_image)
     lz4Data.format = imageFormatToGVTextureFormat(this->compressedImageFormat);
     lz4Data.frame_size = bytes_dxt5.size();
 
+    // UtilityFunctions::print("serialized info");
+    // UtilityFunctions::print("lz4Data.width: " + String::num_int64(lz4Data.width));
+    // UtilityFunctions::print("lz4Data.height: " + String::num_int64(lz4Data.height));
+    // UtilityFunctions::print("lz4Data.format: " + String::num_int64(lz4Data.format));
+    // UtilityFunctions::print("lz4Data.frame_size: " + String::num_int64(lz4Data.frame_size));
+    // UtilityFunctions::print("lz4Data.compressed_bytes.size(): " + String::num_int64(lz4Data.lz4_compressed_bytes.size()));
+
     return createGVTextureByteArray(lz4Data);
 }
 
@@ -216,14 +223,26 @@ Ref<Image> GVTextureSerializer::deserialize(const PackedByteArray &p_data)
     // UtilityFunctions::print("GVTextureSerializer::deserialize");
 
     LZ4Data lz4Data = getLZ4DataFromGVTextureByteArray(p_data);
+
+    // UtilityFunctions::print("deserialized info");
+    // UtilityFunctions::print("lz4Data.width: " + String::num_int64(lz4Data.width));
+    // UtilityFunctions::print("lz4Data.height: " + String::num_int64(lz4Data.height));
+    // UtilityFunctions::print("lz4Data.format: " + String::num_int64(lz4Data.format));
+    // UtilityFunctions::print("lz4Data.frame_size: " + String::num_int64(lz4Data.frame_size));
+    // UtilityFunctions::print("lz4Data.compressed_bytes.size(): " + String::num_int64(lz4Data.lz4_compressed_bytes.size()));
+
     PackedByteArray decompressed_bytes = decompressLZ4(lz4Data.lz4_compressed_bytes, lz4Data.frame_size);
+
+    // UtilityFunctions::print("decompressed_bytes.size(): " + String::num_int64(decompressed_bytes.size()));
 
     int image_format = gvTextureFormatToImageFormat(lz4Data.format);
     Image::Format format = (Image::Format)image_format;
 
-    Ref<Image> image = Ref<Image>(memnew(Image));
-    image->create(lz4Data.width, lz4Data.height, false, format);
-    memcpy(image->get_data().ptrw(), decompressed_bytes.ptr(), decompressed_bytes.size());
+    // UtilityFunctions::print("image_format: " + String(imageFormatToString(image_format).c_str()));
+
+    Ref<Image> image = Image::create_from_data(lz4Data.width, lz4Data.height, false, format, decompressed_bytes);
+
+    // UtilityFunctions::print("image->get_data().size(): " + String::num_int64(image->get_data().size()));
 
     return image;
 }

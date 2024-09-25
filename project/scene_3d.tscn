@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3ofujmcefcby"]
+
+[ext_resource type="Script" path="res://rotator.gd" id="1_7pr2h"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_tlv0x"]
+
+[sub_resource type="Environment" id="Environment_e2ko0"]
+background_mode = 5
+ambient_light_source = 2
+ambient_light_color = Color(0.154876, 0.154876, 0.154876, 1)
+reflected_light_source = 2
+
+[node name="Scene3d" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.92803)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.843616, -0.499512, -0.196975, 0.536946, 0.784802, 0.309474, 0, -0.366842, 0.930283, 0, 0, 0)
+mesh = SubResource("TorusMesh_tlv0x")
+script = ExtResource("1_7pr2h")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e2ko0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.26114, 0)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.72891, 0.655802, 0)
