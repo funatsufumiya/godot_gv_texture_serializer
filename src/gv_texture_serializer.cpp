@@ -138,12 +138,16 @@ PackedByteArray GVTextureSerializer::compressLZ4(const PackedByteArray &p_data)
     size_t compressed_bound = LZ4_compressBound(p_data.size());
     compressed_data.resize( compressed_bound );
     // return PackedByteArray();
-    size_t real_compressed_size = LZ4_compress_default(
+    int real_compressed_size = LZ4_compress_default(
         (const char *)p_data.ptr(),
         (char *)compressed_data.ptrw(),
         p_data.size(),
         compressed_bound
     );
+    if (real_compressed_size < 0) {
+        UtilityFunctions::push_error("LZ4 compression failed");
+        abort();
+    }
     compressed_data.resize(real_compressed_size);
 
     return compressed_data;
@@ -154,12 +158,16 @@ PackedByteArray GVTextureSerializer::decompressLZ4(const PackedByteArray &p_data
     PackedByteArray decompressed_data = PackedByteArray();
     size_t decompressed_bound = frameSize;
     decompressed_data.resize( decompressed_bound );
-    size_t real_decompressed_size = LZ4_decompress_safe(
+    int real_decompressed_size = LZ4_decompress_safe(
         (const char *)p_data.ptr(),
         (char *)decompressed_data.ptrw(),
         p_data.size(),
         decompressed_bound
     );
+    if (real_decompressed_size < 0) {
+        UtilityFunctions::push_error("LZ4 decompression failed");
+        abort();
+    }
     decompressed_data.resize(real_decompressed_size);
 
     return decompressed_data;
