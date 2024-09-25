@@ -1,11 +1,13 @@
 extends Node
 
+
 @onready var serializer: GVTextureSerializer = GVTextureSerializer.new()
+@onready var image_texture: CompressedTexture2D = load("res://icon.svg")
 
 func _ready() -> void:
-	# var singleton = Finder.get_singleton()
-	# print(singleton.get_root())
-	pass	
+	# pass	
+	var bytes:PackedByteArray = serializer.serializeCompressedTexture2D(image_texture)
+	print(bytes.size())
 
 
 func _process(_delta: float) -> void:
