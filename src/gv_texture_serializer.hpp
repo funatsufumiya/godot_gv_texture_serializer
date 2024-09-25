@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/node.hpp>
+#include "lz4.h"
 
 namespace godot {
 
