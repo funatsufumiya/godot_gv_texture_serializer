@@ -2,7 +2,7 @@
 
 GVTextureSerializer addon for Godot 4.2.2 - 4.3
 
-Can be used for Texture sharing as bytes, with ZeroMQ etc.
+You can use this for Texture sharing as bytes, via ZeroMQ / Shared Memory etc.
 
 ## Install
 
