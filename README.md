@@ -46,6 +46,8 @@ texture_rect.texture = ImageTexture.create_from_image(image) # show decompressed
 
 This format is nearly same as [ofxExtremeGpuVideo](https://github.com/Ushio/ofxExtremeGpuVideo), [godot_gv_video_extension](https://github.com/funatsufumiya/godot_gv_video_extension)
 
+Byte size will be shrinked nearly 1/40 from RGBA8 texture.
+
 ## Build and Run
 
 (This process is needed only if you build this plugin by your own)
