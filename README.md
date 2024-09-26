@@ -44,6 +44,8 @@ texture_rect.texture = ImageTexture.create_from_image(image) # show decompressed
 20: raw frame storage (lz4 compressed)
 ```
 
+This format is nearly same as [ofxExtremeGpuVideo](https://github.com/Ushio/ofxExtremeGpuVideo), [godot_gv_video_extension](https://github.com/funatsufumiya/godot_gv_video_extension)
+
 ## Build and Run
 
 (This process is needed only if you build this plugin by your own)
