@@ -146,7 +146,8 @@ PackedByteArray GVTextureSerializer::compressLZ4(const PackedByteArray &p_data)
     );
     if (real_compressed_size < 0) {
         UtilityFunctions::push_error("LZ4 compression failed");
-        abort();
+        // abort();
+        return PackedByteArray();
     }
     compressed_data.resize(real_compressed_size);
 
@@ -166,7 +167,8 @@ PackedByteArray GVTextureSerializer::decompressLZ4(const PackedByteArray &p_data
     );
     if (real_decompressed_size < 0) {
         UtilityFunctions::push_error("LZ4 decompression failed");
-        abort();
+        // abort();
+        return PackedByteArray();
     }
     decompressed_data.resize(real_decompressed_size);
 
@@ -209,6 +211,10 @@ PackedByteArray GVTextureSerializer::serializeImage(const Ref<Image> &p_image)
     PackedByteArray bytes_dxt5 = serializeImageWithoutLZ4(p_image);
     PackedByteArray compressed_bytes = compressLZ4(bytes_dxt5);
 
+    if (compressed_bytes.size() == 0) {
+        return PackedByteArray();
+    }
+
     LZ4Data lz4Data;
     lz4Data.lz4_compressed_bytes = compressed_bytes;
     lz4Data.width = p_image->get_width();
@@ -240,6 +246,10 @@ Ref<Image> GVTextureSerializer::deserialize(const PackedByteArray &p_data)
     // UtilityFunctions::print("lz4Data.compressed_bytes.size(): " + String::num_int64(lz4Data.lz4_compressed_bytes.size()));
 
     PackedByteArray decompressed_bytes = decompressLZ4(lz4Data.lz4_compressed_bytes, lz4Data.frame_size);
+
+    if (decompressed_bytes.size() == 0) {
+        return Ref<Image>();
+    }
 
     // UtilityFunctions::print("decompressed_bytes.size(): " + String::num_int64(decompressed_bytes.size()));
 
